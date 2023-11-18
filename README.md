@@ -38,6 +38,19 @@ Update your [OpenAI key](https://platform.openai.com/account/api-keys) in [opena
 }
 ```
 
+### Simple Inference
+
+```
+python demo.py infer contrast_cot --model_name openai --model_path openai_info.json \
+--question "Henry made two stops during his 60-mile bike trip. He first stopped after 20 miles. His second stop was 15 miles before the end of the trip. How many miles did he travel between his first and second stops?"
+
+{
+  "question": "Henry made two stops during his 60-mile bike trip. He first stopped after 20 miles. His second stop was 15 miles before the end of the trip. How many miles did he travel between his first and second stops?",
+  "prompt": "Question: There are 15 trees in the grove. Grove workers will plant trees in the grove today. After they are done, there will be 21 trees. How many trees did the grove workers plant today?\nExplanation: There are 15 trees originally. Then there were 21 trees after the Grove workers planted some more. So there must have been 21 - 15 = 6 trees that were planted.\nAnswer: 6\nWrong explanation: There are 21 - 15 = 6 trees originally. Then there were 15 trees after the Grove workers planted some more. So there must have been 21 trees that were planted.\nWrong Answer: 21\n\nQuestion: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot??\nExplanation: There are originally 3 cars. Then 2 more cars arrive. Now 3 + 2 = 5 cars are in the parking lot.\nAnswer: 5\nWrong explanation: There are originally 3 + 2 = 5 cars. Then 3 more cars arrive. Now 2 cars are in the parking lot\nWrong Answer: 2\n\nQuestion: Leah had 32 chocolates and her sister had 42. If they ate 35, how many pieces do they have left in total?\nExplanation: Originally, Leah had 32 chocolates and her sister had 42. So in total they had 32 + 42 = 74. After eating 35, they had 74 - 35 = 39 pieces left in total.\nAnswer: 39\nWrong explanation: Originally, Leah had 32 + 42 = 74 chocolates and her sister had 32. So in total they had 74 - 35 = 39. After eating 35, they had 42 pieces left in total\nWrong Answer: 42\n\nQuestion: Jason had 20 lollipops. He gave Denny some lollipops. Now Jason has 12 lollipops. How many lollipops did Jason give to Denny?\nExplanation: Jason had 20 lollipops originally. Then he had 12 after giving some to Denny. So he gave Denny 20 - 12 = 8 lollipops.\nAnswer: 8\nWrong explanation: Jason had 20 - 12 = 8 lollipops originally. Then he had 20 after giving some to Denny. So he gave Denny 12 lollipops\nWrong Answer: 12\n\nQuestion: Henry made two stops during his 60-mile bike trip. He first stopped after 20 miles. His second stop was 15 miles before the end of the trip. How many miles did he travel between his first and second stops?\nExplanation: ",
+  "output": "Henry traveled a total of 60 miles on his bike trip. His second stop was 15 miles before the end of the trip, so he had already traveled 60 - 15 = 45 miles. His first stop was after 20 miles, so he traveled 45 - 20 = 25 miles between his first and second stops.\nAnswer: 25\nWrong explanation: Henry traveled a total of 60 miles on his bike trip. His first stop was after 20 miles, so he traveled 20 miles between his starting point and his first stop. His second stop was 15 miles before the end of the trip, so he traveled 60 - 15 = 45 miles between his second stop and the end of the trip. Therefore, he traveled a total of 20 + 45 = 65 miles between his first and second stops.\nWrong Answer: 65"
+}
+```
+
 ### Evaluation
 
 Evaluate GSM8K with chain-of-thought

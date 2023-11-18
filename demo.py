@@ -32,6 +32,16 @@ class ReasonData(BaseModel):
     samples: List[ReasonSample]
 
     @classmethod
+    def load(cls, path: str):
+        samples = []
+        with open(path) as f:
+            for line in f:
+                raw = json.loads(line)
+                samples.append(ReasonSample(**raw))
+
+        return cls(samples=samples)
+
+    @classmethod
     def load_gsm8k_test(cls, path: str = "gsm8k", subset: str = "main", split="test"):
         samples = []
         for raw in load_dataset(path, subset, split=split):
@@ -264,6 +274,18 @@ def main(
     print(path_out)
     print(result)
     return result["score"]
+
+
+def infer(prompt_name: str, question: str, **kwargs):
+    model = OpenAIModel(**kwargs)
+    data = ReasonData.load_from_name("gsm8k", split="train", sample=True)
+    sample = ReasonSample(question=question)
+    prompt = select_prompter(prompt_name).run(data, sample)
+    output = model.run(prompt)
+
+    info = dict(question=question, prompt=prompt, output=output)
+    print(json.dumps(info, indent=2))
+    # return info
 
 
 if __name__ == "__main__":
